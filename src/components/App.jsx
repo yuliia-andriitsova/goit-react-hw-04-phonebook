@@ -3,12 +3,10 @@ import { PhoneBook } from './PhoneBook';
 import { Filter } from './Filter';
 import { ContactList } from './ContactList';
 import { nanoid } from 'nanoid';
+import { useEffect } from 'react';
 
 const App = () => {
-  const [contacts, setContacts] = useState([]);
-  const [id, setId] = useState('id-1');
-  const [name, setName] = useState('Rosie Simpson');
-  const [number, setNumber] = useState('459-12-56');
+  const [contacts, setContacts] = useState(init);
   const [filter, setFilter] = useState('');
 
   // state = {
@@ -27,6 +25,21 @@ const App = () => {
   //   });
   //  };
 
+  function init() {
+    const data = localStorage.getItem('contacts');
+    if (data) {
+      return JSON.parse(data);
+    }
+    return [
+      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+    ];
+  }
+
+  useEffect(() => {
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
+
   const handleAddContact = (name, number) => {
     if (contacts.some(contact => contact.name === name)) {
       return alert(`${name} is already in contacts `);
@@ -40,10 +53,10 @@ const App = () => {
   //     this.setState({ [event.target.name]: event.target.value });
   //   };
 
-  const onChangeName = event => {
-    const { value } = event.target;
-    setName({ value });
-  };
+  // const onChangeName = event => {
+  //   const { value } = event.target;
+  //   setName({ value });
+  // };
 
   // onFilterName = event => {
   //   this.setState({ filter: event.target.value });
