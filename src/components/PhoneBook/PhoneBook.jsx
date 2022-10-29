@@ -53,7 +53,9 @@ export function PhoneBook({ handleAddContact }) {
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
         />
-        <button type="submit">Add contact</button>
+        <button className="btnSubmit" type="submit">
+          Add contact
+        </button>
       </form>
     </>
   );
